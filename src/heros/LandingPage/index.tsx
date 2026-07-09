@@ -6,7 +6,7 @@ import type { Page } from '@/payload-types';
 import { Media } from '@/components/Media';
 import RichText from '@/components/RichText';
 
-export const HighImpactHero: React.FC<Page['hero']> = ({ media, subheader, header }) => {
+export const LandingPageHero: React.FC<Page['hero']> = ({ media, header, subheader }) => {
   return (
     <div
       className="relative mt-[-10.4rem] flex items-center justify-center text-white"
@@ -14,8 +14,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ media, subheader, heade
     >
       <div className="container mb-8 z-10 relative flex items-center justify-center">
         <div className="max-w-146 md:text-center">
-          {header && <h1 className="mb-6">{header}</h1>}
-          {subheader && <RichText className="mb-6" data={subheader} enableGutter={false} />}
+          {subheader && <RichText className="text-xl mb-6" data={subheader} enableGutter={false} />}
         </div>
       </div>
       <div className="min-h-[80vh] select-none">

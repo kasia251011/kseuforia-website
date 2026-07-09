@@ -1,13 +1,11 @@
-import type { Field } from 'payload'
+import type { Field } from 'payload';
 
 import {
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
-import { linkGroup } from '@/fields/linkGroup'
+} from '@payloadcms/richtext-lexical';
 
 export const hero: Field = {
   name: 'hero',
@@ -15,58 +13,72 @@ export const hero: Field = {
   fields: [
     {
       name: 'type',
+      label: 'Typ',
       type: 'select',
       defaultValue: 'lowImpact',
-      label: 'Type',
       options: [
         {
-          label: 'None',
+          label: 'Brak',
           value: 'none',
         },
         {
-          label: 'High Impact',
+          label: 'Wysoki priorytet',
           value: 'highImpact',
         },
         {
-          label: 'Medium Impact',
+          label: 'Średni priorytet',
           value: 'mediumImpact',
         },
         {
-          label: 'Low Impact',
+          label: 'Niski priorytet',
           value: 'lowImpact',
+        },
+        {
+          label: 'Landing Page',
+          value: 'landingPage',
         },
       ],
       required: true,
     },
     {
-      name: 'richText',
+      name: 'media',
+      label: 'Zdjęcie w tle',
+      type: 'upload',
+      admin: {
+        condition: (_, { type } = {}) =>
+          ['highImpact', 'mediumImpact', 'landingPage'].includes(type),
+      },
+      relationTo: 'media',
+      required: true,
+    },
+    {
+      label: 'Nagłówek',
+      name: 'header',
+      type: 'text',
+      required: true,
+      admin: {
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'lowImpact'].includes(type),
+      },
+    },
+    {
+      name: 'subheader',
       type: 'richText',
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
             ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+            // HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
-          ]
+          ];
         },
       }),
-      label: false,
-    },
-    linkGroup({
-      overrides: {
-        maxRows: 2,
-      },
-    }),
-    {
-      name: 'media',
-      type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) =>
+          ['highImpact', 'mediumImpact', 'landingPage'].includes(type),
       },
-      relationTo: 'media',
-      required: true,
+      label: false,
     },
   ],
   label: false,
-}
+};
