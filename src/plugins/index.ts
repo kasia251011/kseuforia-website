@@ -94,6 +94,8 @@ export const plugins: Plugin[] = [
     collections: {
       media: true,
     },
+    enabled: process.env.S3_ENABLED !== 'false',
+    disableLocalStorage: process.env.S3_ENABLED !== 'false',
     bucket: process.env.S3_BUCKET!,
     config: {
       credentials: {

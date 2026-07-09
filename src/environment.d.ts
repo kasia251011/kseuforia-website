@@ -10,6 +10,7 @@ declare global {
       S3_SECRET_ACCESS_KEY: string
       S3_REGION: string
       S3_ENDPOINT?: string
+      S3_ENABLED?: string
     }
   }
 }
