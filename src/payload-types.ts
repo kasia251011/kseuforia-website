@@ -72,6 +72,7 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    'sport-sections': SportSection;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,6 +95,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'sport-sections': SportSectionsSelect<false> | SportSectionsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -178,7 +180,7 @@ export interface Page {
       [k: string]: unknown;
     } | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | SportSectionsBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -318,59 +320,6 @@ export interface FolderInterface {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
-<<<<<<< HEAD
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  title: string;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  parent?: (number | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: number;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
-=======
->>>>>>> 3ed2984 (Add landing pahe hero)
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
@@ -813,6 +762,53 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SportSectionsBlock".
+ */
+export interface SportSectionsBlock {
+  header: string;
+  subheader?: string | null;
+  relationTo?: 'sport-sections' | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'sportSectionsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sport-sections".
+ */
+export interface SportSection {
+  id: number;
+  name: string;
+  cardImage?: (number | null) | Media;
+  heroImage?: (number | null) | Media;
+  ageCategory?: string | null;
+  trainings?: string | null;
+  signUp?: string | null;
+  description?: string | null;
+  coach?: {
+    name?: string | null;
+    contact?: string | null;
+    image?: (number | null) | Media;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1022,6 +1018,10 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'sport-sections';
+        value: number | SportSection;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1105,6 +1105,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        sportSectionsBlock?: T | SportSectionsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1201,6 +1202,17 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SportSectionsBlock_select".
+ */
+export interface SportSectionsBlockSelect<T extends boolean = true> {
+  header?: T;
+  subheader?: T;
+  relationTo?: T;
   id?: T;
   blockName?: T;
 }
@@ -1371,6 +1383,38 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sport-sections_select".
+ */
+export interface SportSectionsSelect<T extends boolean = true> {
+  name?: T;
+  cardImage?: T;
+  heroImage?: T;
+  ageCategory?: T;
+  trainings?: T;
+  signUp?: T;
+  description?: T;
+  coach?:
+    | T
+    | {
+        name?: T;
+        contact?: T;
+        image?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1777,6 +1821,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'sport-sections';
+          value: number | SportSection;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
