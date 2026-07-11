@@ -1,25 +1,42 @@
-'use client'
-import Link from 'next/link'
-import React from 'react'
+'use client';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import clsx from 'clsx';
 
-import type { Header } from '@/payload-types'
+import type { Header } from '@/payload-types';
 
-import { Logo } from '@/components/Logo/Logo'
-import { HeaderNav } from './Nav'
+import { Logo } from '@/components/Logo/Logo';
+import { HeaderNav } from './Nav';
 
 interface HeaderClientProps {
-  data: Header
+  data: Header;
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 0);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="container relative z-20   ">
-      <div className="py-8 flex justify-between">
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert" />
-        </Link>
-        <HeaderNav data={data} />
+    <header
+      className={clsx('fixed top-0 inset-x-0 z-20 transition-colors duration-300', {
+        'bg-primary': isScrolled,
+        'bg-transparent': !isScrolled,
+      })}
+    >
+      <div className="container">
+        <div className="py-4 flex justify-between">
+          <Link href="/">
+            <Logo loading="eager" priority="high" className="invert" />
+          </Link>
+          <HeaderNav data={data} />
+        </div>
       </div>
     </header>
-  )
-}
+  );
+};
