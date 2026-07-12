@@ -1,16 +1,18 @@
-import type { GlobalConfig } from 'payload'
+import type { GlobalConfig } from 'payload';
 
-import { link } from '@/fields/link'
-import { revalidateHeader } from './hooks/revalidateHeader'
+import { link } from '@/fields/link';
+import { revalidateHeader } from './hooks/revalidateHeader';
 
 export const Header: GlobalConfig = {
   slug: 'header',
+  label: 'Pasek nawigacyjny',
   access: {
     read: () => true,
   },
   fields: [
     {
       name: 'navItems',
+      label: 'Elementy nawigacji',
       type: 'array',
       fields: [
         link({
@@ -29,4 +31,4 @@ export const Header: GlobalConfig = {
   hooks: {
     afterChange: [revalidateHeader],
   },
-}
+};
