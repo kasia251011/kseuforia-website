@@ -16,6 +16,7 @@ import { defaultLexical } from '@/fields/defaultLexical';
 import { getServerSideURL } from './utilities/getURL';
 import { pl } from '@payloadcms/translations/languages/pl';
 import { SportSections } from './collections/SportSections';
+import { Announcements } from './collections/Announcements';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -65,7 +66,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, SportSections],
+  collections: [Pages, Posts, Media, Categories, Users, SportSections, Announcements],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins,

@@ -52,6 +52,15 @@ export const hero: Field = {
       required: true,
     },
     {
+      label: 'Tekst nad nagłówkiem',
+      name: 'aboveHeader',
+      type: 'text',
+      required: true,
+      admin: {
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'lowImpact'].includes(type),
+      },
+    },
+    {
       label: 'Nagłówek',
       name: 'header',
       type: 'text',

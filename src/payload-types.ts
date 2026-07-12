@@ -73,6 +73,7 @@ export interface Config {
     categories: Category;
     users: User;
     'sport-sections': SportSection;
+    announcements: Announcement;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -96,6 +97,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'sport-sections': SportSectionsSelect<false> | SportSectionsSelect<true>;
+    announcements: AnnouncementsSelect<false> | AnnouncementsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -163,6 +165,7 @@ export interface Page {
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'landingPage';
     media?: (number | null) | Media;
+    aboveHeader?: string | null;
     header?: string | null;
     subheader?: {
       root: {
@@ -180,7 +183,9 @@ export interface Page {
       [k: string]: unknown;
     } | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | SportSectionsBlock)[];
+  layout: (
+    CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | SportSectionsBlock | AnnouncementsBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -774,6 +779,18 @@ export interface SportSectionsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AnnouncementsBlock".
+ */
+export interface AnnouncementsBlock {
+  header: string;
+  subheader?: string | null;
+  relationTo?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'announcementsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sport-sections".
  */
 export interface SportSection {
@@ -798,6 +815,46 @@ export interface SportSection {
     image?: (number | null) | Media;
     description?: string | null;
   };
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcements".
+ */
+export interface Announcement {
+  id: number;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -1022,6 +1079,10 @@ export interface PayloadLockedDocument {
         value: number | SportSection;
       } | null)
     | ({
+        relationTo: 'announcements';
+        value: number | Announcement;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1094,6 +1155,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         media?: T;
+        aboveHeader?: T;
         header?: T;
         subheader?: T;
       };
@@ -1106,6 +1168,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         sportSectionsBlock?: T | SportSectionsBlockSelect<T>;
+        announcementsBlock?: T | AnnouncementsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1210,6 +1273,17 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "SportSectionsBlock_select".
  */
 export interface SportSectionsBlockSelect<T extends boolean = true> {
+  header?: T;
+  subheader?: T;
+  relationTo?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AnnouncementsBlock_select".
+ */
+export interface AnnouncementsBlockSelect<T extends boolean = true> {
   header?: T;
   subheader?: T;
   relationTo?: T;
@@ -1410,6 +1484,27 @@ export interface SportSectionsSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcements_select".
+ */
+export interface AnnouncementsSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -1825,6 +1920,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'sport-sections';
           value: number | SportSection;
+        } | null)
+      | ({
+          relationTo: 'announcements';
+          value: number | Announcement;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
@@ -1855,17 +1954,6 @@ export interface BannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

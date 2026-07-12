@@ -1,8 +1,7 @@
 import { cn } from '@/utilities/ui';
 import Link from 'next/link';
-import React, { Fragment } from 'react';
 
-import type { Post, SportSection } from '@/payload-types';
+import type { SportSection } from '@/payload-types';
 
 import { Media } from '@/components/Media';
 
@@ -15,11 +14,7 @@ export const SportSectionCard = ({
 
   return (
     <Link href={href}>
-      <div
-        className={cn(
-          'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
-        )}
-      >
+      <div className={cn('border  rounded-lg overflow-hidden bg-card hover:cursor-pointer')}>
         <div className="relative w-full ">
           {!cardImage && <div className="">No image</div>}
           {cardImage && typeof cardImage !== 'string' && <Media resource={cardImage} size="33vw" />}
