@@ -20,11 +20,11 @@
   }
 
   h1 {
-    @apply text-5xl sm:text-6xl md:text-7xl lg:text-5xl;
+    @apply text-5xl sm:text-6xl md:text-7xl;
   }
 
   h2 {
-    @apply text-lg md:text-xl lg:text-2xl;
+    @apply text-2xl md:text-2xl lg:text-5xl;
   }
 }
 
@@ -106,9 +106,13 @@
 
 :root {
   --primary: #082c56;
+  --primary-light: #466e9e;
+
+  --stroke-primary: #DFEDFF;
+
+  
   --pink: #e2a9f1;
   --blue: #2877d5;
-  --light-primary: #466e9e;
 
   --background: #f8f9fa;
   --radius: 0.625rem;
@@ -123,6 +127,7 @@
   --color-foreground: var(--foreground);
   --color-pink: var(--pink);
   --color-primary: var(--primary);
+  --color-stroke-primary: var(--stroke-primary);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
