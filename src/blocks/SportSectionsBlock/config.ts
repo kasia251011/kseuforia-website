@@ -1,5 +1,7 @@
 import type { Block } from 'payload';
 
+import { link } from '@/fields/link';
+
 export const SportSectionsBlock: Block = {
   slug: 'sportSectionsBlock',
   interfaceName: 'SportSectionsBlock',
@@ -33,6 +35,17 @@ export const SportSectionsBlock: Block = {
           label: 'Sekcje sportowe',
           value: 'sport-sections',
         },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        link({
+          appearances: false,
+          overrides: {
+            label: 'Link - Zobacz wszystko',
+          },
+        }),
       ],
     },
   ],

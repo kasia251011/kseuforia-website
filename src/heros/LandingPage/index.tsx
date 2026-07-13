@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 
 import type { Page } from '@/payload-types';
 
@@ -13,7 +12,7 @@ export const LandingPageHero = ({ media, header, subheader }: Page['hero']) => {
       data-theme="dark"
     >
       <div className="container mb-8 z-10 relative flex flex-col items-center justify-center">
-        <h1 className="text-7xl md:text-[112px] font-alfa-slab-one uppercase max-w-175 text-center">
+        <h1 className="text-7xl md:text-[112px] font-alfa-slab-one uppercase max-w-175 text-center text-white">
           <span className="whitespace-nowrap">KS Grot</span> Euforia
         </h1>
         <div className="max-w-140 w-full flex items-center justify-center gap-4">
@@ -29,7 +28,7 @@ export const LandingPageHero = ({ media, header, subheader }: Page['hero']) => {
         {media && typeof media === 'object' && (
           <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
         )}
-        <div className="absolute inset-0 -z-[5] bg-hero-overlay" />
+        <div className="absolute inset-0 z-[-5] bg-hero-overlay" />
       </div>
     </div>
   );
