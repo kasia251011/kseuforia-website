@@ -25,12 +25,18 @@ export const getAnnouncementBySlug = cache(async ({ slug }: { slug: string }) =>
   return result.docs?.[0] || null;
 });
 
-export const getAnnouncements = async (fields?: (keyof Announcement)[]) => {
+export const getAnnouncements = async ({
+  fields,
+  limit,
+}: {
+  fields?: (keyof Announcement)[];
+  limit?: number;
+} = {}) => {
   const payload = await getPayload({ config: configPromise });
   const announcements = await payload.find({
     collection: 'announcements',
     draft: false,
-    limit: 1000,
+    limit: limit ?? 1000,
     overrideAccess: false,
     pagination: false,
     ...(fields ? { select: Object.fromEntries(fields.map((field) => [field, true])) } : {}),

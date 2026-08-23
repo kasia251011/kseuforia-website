@@ -30,8 +30,8 @@ export const SportSectionsBlock = async ({
 
   return (
     <div className="container my-16 flex flex-col gap-8" id={`block-${id}`}>
-      <div className="flex flex-col gap-1 md:gap-2">
-        {subheader && <p className="text-xl font-semibold text-primary">{subheader}</p>}
+      <div className="flex flex-col gap-2">
+        {subheader && <p className="subheader">{subheader}</p>}
         <h2>{header}</h2>
       </div>
       <div

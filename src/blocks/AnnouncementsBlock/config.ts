@@ -1,3 +1,4 @@
+import { link } from '@/fields/link';
 import type { Block } from 'payload';
 
 export const AnnouncementsBlock: Block = {
@@ -28,6 +29,17 @@ export const AnnouncementsBlock: Block = {
       },
       defaultValue: 'Ogłoszenia',
       label: 'Kolekcja do wyświetlenia',
+    },
+    {
+      type: 'row',
+      fields: [
+        link({
+          appearances: false,
+          overrides: {
+            label: 'Link - Zobacz wszystko',
+          },
+        }),
+      ],
     },
   ],
   labels: {
