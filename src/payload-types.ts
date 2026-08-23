@@ -800,6 +800,21 @@ export interface AnnouncementsBlock {
   header: string;
   subheader?: string | null;
   relationTo?: string | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'announcementsBlock';
@@ -1311,6 +1326,15 @@ export interface AnnouncementsBlockSelect<T extends boolean = true> {
   header?: T;
   subheader?: T;
   relationTo?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
   id?: T;
   blockName?: T;
 }
