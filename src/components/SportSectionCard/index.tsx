@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { SportSection } from '@/payload-types';
 
 import { Media } from '@/components/Media';
+import { clsx } from 'clsx';
 
 type Props = Pick<SportSection, 'cardImage' | 'name' | 'slug'> & { className?: string };
 
@@ -13,8 +14,8 @@ export const SportSectionCard = ({ slug, name, cardImage, className }: Props) =>
   return (
     <Link href={href}>
       <div
-        className={cn(
-          'group border border-stroke-primary overflow-hidden bg-card hover:cursor-pointer rounded-2xl h-77.5 flex flex-col',
+        className={clsx(
+          'bg-white group border border-stroke-primary overflow-hidden bg-card hover:cursor-pointer rounded-2xl h-77.5 flex flex-col',
           className,
         )}
       >

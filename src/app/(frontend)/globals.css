@@ -109,12 +109,11 @@
   --primary-light: #466e9e;
 
   --stroke-primary: #DFEDFF;
-
   
   --pink: #e2a9f1;
   --blue: #2877d5;
 
-  --background: #f8f9fa;
+  --background: #F8F9FA;
   --radius: 0.625rem;
 
   --success: oklch(78% 0.08 200deg);
