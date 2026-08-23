@@ -32,7 +32,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       <div className="container">
         <div className="py-4 flex justify-between">
           <Link href="/">
-            <Logo loading="eager" priority="high" className="invert" />
+            <Logo loading="eager" priority="high" className={clsx(isScrolled && 'size-12!')} />
           </Link>
           <HeaderNav data={data} />
         </div>
