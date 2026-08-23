@@ -52,7 +52,7 @@ export const SportSectionsBlock = async ({
       </div>
       {link?.label && (
         <div className="flex justify-end">
-          <CMSLink {...link} appearance="default" className="self-start" />
+          <CMSLink {...link} appearance="default" className="self-start bg-white" />
         </div>
       )}
     </div>

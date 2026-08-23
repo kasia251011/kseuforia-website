@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
@@ -29,7 +30,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         'bg-transparent': !isScrolled,
       })}
     >
-      <div className="container">
+      <div className="max-w-344! px-4 mx-auto">
         <div className="py-4 flex justify-between">
           <Link href="/">
             <Logo loading="eager" priority="high" className={clsx(isScrolled && 'size-12!')} />
