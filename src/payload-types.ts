@@ -184,7 +184,14 @@ export interface Page {
     } | null;
   };
   layout: (
-    CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | SportSectionsBlock | AnnouncementsBlock
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | SportSectionsBlock
+    | AnnouncementsBlock
+    | PostsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -821,6 +828,33 @@ export interface AnnouncementsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PostsBlock".
+ */
+export interface PostsBlock {
+  header: string;
+  subheader?: string | null;
+  relationTo?: string | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'postsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sport-sections".
  */
 export interface SportSection {
@@ -1199,6 +1233,7 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         sportSectionsBlock?: T | SportSectionsBlockSelect<T>;
         announcementsBlock?: T | AnnouncementsBlockSelect<T>;
+        postsBlock?: T | PostsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1323,6 +1358,26 @@ export interface SportSectionsBlockSelect<T extends boolean = true> {
  * via the `definition` "AnnouncementsBlock_select".
  */
 export interface AnnouncementsBlockSelect<T extends boolean = true> {
+  header?: T;
+  subheader?: T;
+  relationTo?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PostsBlock_select".
+ */
+export interface PostsBlockSelect<T extends boolean = true> {
   header?: T;
   subheader?: T;
   relationTo?: T;

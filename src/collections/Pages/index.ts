@@ -22,6 +22,7 @@ import {
 } from '@payloadcms/plugin-seo/fields';
 import { SportSectionsBlock } from '@/blocks/SportSectionsBlock/config';
 import { AnnouncementsBlock } from '@/blocks/AnnouncementsBlock/config';
+import { PostsBlock } from '@/blocks/PostsBlock/config';
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -84,6 +85,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FormBlock,
                 SportSectionsBlock,
                 AnnouncementsBlock,
+                PostsBlock,
               ],
               required: true,
               admin: {

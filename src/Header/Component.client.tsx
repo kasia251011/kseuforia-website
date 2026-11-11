@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
@@ -15,6 +16,8 @@ interface HeaderClientProps {
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHomepage = pathname === '/' || pathname === '/home';
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 0);
@@ -26,14 +29,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <header
       className={clsx('fixed top-0 inset-x-0 z-20 transition-colors duration-300', {
-        'bg-primary': isScrolled,
-        'bg-transparent': !isScrolled,
+        'bg-primary': isScrolled || !isHomepage,
+        'bg-transparent': !isScrolled && isHomepage,
       })}
     >
       <div className="max-w-344! px-4 mx-auto">
-        <div className="py-4 flex justify-between">
+        <div className={clsx('flex justify-between py-2')}>
           <Link href="/">
-            <Logo loading="eager" priority="high" className={clsx(isScrolled && 'size-12!')} />
+            <Logo loading="eager" priority="high" className={clsx('size-12!')} />
           </Link>
           <HeaderNav data={data} />
         </div>
