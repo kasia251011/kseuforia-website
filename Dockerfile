@@ -30,6 +30,12 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+# Railway only forwards service variables into the build when the Dockerfile
+# declares them with ARG. next build starts Payload, which needs these.
+ARG PAYLOAD_SECRET
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_SERVER_URL
+
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
