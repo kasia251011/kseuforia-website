@@ -27,6 +27,7 @@ export const SportSectionsBlock = async ({
   link,
 }: SportSectionsBlockProps & { id?: string }) => {
   const sportSections = await getSportSections();
+  const sportSectionDocs = sportSections?.docs || [];
 
   return (
     <div className="container my-16 flex flex-col gap-8" id={`block-${id}`}>
@@ -37,10 +38,10 @@ export const SportSectionsBlock = async ({
       <div
         className={clsx(
           'grid max-md:grid-cols-1 gap-7',
-          sectionLengthToGridCols(sportSections.docs.length),
+          sectionLengthToGridCols(sportSectionDocs.length),
         )}
       >
-        {sportSections.docs.map(({ name, slug, cardImage }) => (
+        {sportSectionDocs.map(({ name, slug, cardImage }) => (
           <SportSectionCard
             className="col-span-1"
             key={slug}

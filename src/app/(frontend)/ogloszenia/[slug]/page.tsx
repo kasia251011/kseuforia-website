@@ -10,9 +10,9 @@ import RichText from '@/components/RichText';
 export async function generateStaticParams() {
   const sportSections = await getSportSections(['slug']);
 
-  const params = sportSections.docs.map(({ slug }) => {
+  const params = sportSections?.docs.map(({ slug }) => {
     return { slug };
-  });
+  }) || [];
 
   return params;
 }
