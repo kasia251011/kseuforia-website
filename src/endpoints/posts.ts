@@ -32,16 +32,21 @@ export const getPosts = async ({
   fields?: (keyof Post)[];
   limit?: number;
 } = {}) => {
-  const payload = await getPayload({ config: configPromise });
-  const posts = await payload.find({
-    collection: 'posts',
-    draft: false,
-    limit: limit ?? 1000,
-    overrideAccess: false,
-    pagination: false,
-    sort: '-publishedAt',
-    ...(fields ? { select: Object.fromEntries(fields.map((field) => [field, true])) } : {}),
-  });
+  try {
+    const payload = await getPayload({ config: configPromise });
+    const posts = await payload.find({
+      collection: 'posts',
+      draft: false,
+      limit: limit ?? 1000,
+      overrideAccess: false,
+      pagination: false,
+      sort: '-publishedAt',
+      ...(fields ? { select: Object.fromEntries(fields.map((field) => [field, true])) } : {}),
+    });
 
-  return posts;
+    return posts;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return;
+  }
 };

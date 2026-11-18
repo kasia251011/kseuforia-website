@@ -10,7 +10,7 @@ export const PostsBlockComponent = async ({
   subheader,
   header,
 }: PostsBlockProps & { id?: string }) => {
-  const { docs: posts } = await getPosts({ limit: 3 });
+  const { docs: posts } = (await getPosts({ limit: 3 })) || { docs: [] };
 
   return (
     <div className="container my-16 flex flex-col gap-8" id={`block-${id}`}>

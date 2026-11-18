@@ -17,7 +17,7 @@ export const dynamic = 'force-static'
 export const revalidate = 600
 
 export default async function Page() {
-  const { docs, totalDocs } = await getPosts()
+  const { docs, totalDocs } = (await getPosts()) || { docs: [], totalDocs: 0 }
 
   const { featured, posts } = splitPostsForPage(docs, 1)
   const { indexEnd, indexStart } = getPostsPageRange(1, totalDocs)

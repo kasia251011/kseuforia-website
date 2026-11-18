@@ -32,15 +32,20 @@ export const getAnnouncements = async ({
   fields?: (keyof Announcement)[];
   limit?: number;
 } = {}) => {
-  const payload = await getPayload({ config: configPromise });
-  const announcements = await payload.find({
-    collection: 'announcements',
-    draft: false,
-    limit: limit ?? 1000,
-    overrideAccess: false,
-    pagination: false,
-    ...(fields ? { select: Object.fromEntries(fields.map((field) => [field, true])) } : {}),
-  });
+  try {
+    const payload = await getPayload({ config: configPromise });
+    const announcements = await payload.find({
+      collection: 'announcements',
+      draft: false,
+      limit: limit ?? 1000,
+      overrideAccess: false,
+      pagination: false,
+      ...(fields ? { select: Object.fromEntries(fields.map((field) => [field, true])) } : {}),
+    });
 
-  return announcements;
+    return announcements;
+  } catch (error) {
+    console.error('Error fetching announcements:', error);
+    return;
+  }
 };

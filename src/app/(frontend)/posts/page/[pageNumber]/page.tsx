@@ -24,7 +24,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!Number.isInteger(sanitizedPageNumber) || sanitizedPageNumber < 1) notFound()
 
-  const { docs, totalDocs } = await getPosts()
+  const { docs, totalDocs } = (await getPosts()) || { docs: [], totalDocs: 0 }
 
   const { posts } = splitPostsForPage(docs, sanitizedPageNumber)
   const { indexEnd, indexStart } = getPostsPageRange(sanitizedPageNumber, totalDocs)
@@ -67,7 +67,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 }
 
 export async function generateStaticParams() {
-  const { totalDocs } = await getPosts({ fields: ['id'] })
+  const { totalDocs } = (await getPosts({ fields: ['id'] })) || { totalDocs: 0 }
 
   const totalPages = getPostsTotalPages(totalDocs)
 

@@ -11,6 +11,7 @@ export const AnnouncementsBlock = async ({
   link,
 }: AnnouncementsBlockProps & { id?: string }) => {
   const announcements = await getAnnouncements({ limit: 3 });
+  const announcementDocs = announcements?.docs || [];
 
   return (
     <div className="my-16 container flex flex-col gap-8" id={`block-${id}`}>
@@ -19,7 +20,7 @@ export const AnnouncementsBlock = async ({
         <h2>{header}</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {announcements.docs.map(({ title, slug, publishedAt }) => (
+        {announcementDocs.map(({ title, slug, publishedAt }) => (
           <AnnouncementCard key={slug} title={title} slug={slug} publishedAt={publishedAt} />
         ))}
       </div>
