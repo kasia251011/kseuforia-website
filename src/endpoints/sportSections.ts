@@ -26,15 +26,20 @@ export const getSportSectionBySlug = cache(async ({ slug }: { slug: string }) =>
 });
 
 export const getSportSections = async (fields?: (keyof SportSection)[]) => {
-  const payload = await getPayload({ config: configPromise });
-  const sportSections = await payload.find({
-    collection: 'sport-sections',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    ...(fields ? { select: Object.fromEntries(fields.map((field) => [field, true])) } : {}),
-  });
-
-  return sportSections;
+  try {
+    const payload = await getPayload({ config: configPromise });
+    const sportSections = await payload.find({
+      collection: 'sport-sections',
+      draft: false,
+      limit: 1000,
+      overrideAccess: false,
+      pagination: false,
+      ...(fields ? { select: Object.fromEntries(fields.map((field) => [field, true])) } : {}),
+    });
+    
+    return sportSections;
+  } catch (error) {
+    console.error('Error fetching sport sections:', error);
+    return;
+  }
 };
